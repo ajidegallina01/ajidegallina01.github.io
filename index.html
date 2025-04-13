@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carta</title>
+    <title>Carta de Amor con Corazones</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -53,6 +53,8 @@
         .card-front {
             background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
             overflow: hidden;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .card-front::before {
@@ -71,6 +73,8 @@
             padding: 20px;
             z-index: 1;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .card-back {
@@ -81,6 +85,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .letter-content {
