@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta de Amor con Corazones</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                              url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23999999' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            overflow: hidden; /* Para que los corazones no creen scroll */
+        }
+
+        .container {
+            position: relative;
+            width: 300px;
+            perspective: 1200px;
+            z-index: 10; /* Para que la carta esté por encima de los corazones */
+        }
+
+        .card {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            cursor: pointer;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            overflow: hidden;
+        }
+
+        .card-front::before {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+        }
+
+        .front-text {
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            padding: 20px;
+            z-index: 1;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-back {
+            background: white url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ff9a9e' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            transform: rotateY(180deg);
+            padding: 25px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .letter-content {
+            font-family: 'Courier New', monospace;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            color: #ff4b6e;
+            font-size: 24px;
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .love-word {
+            color: #ff4b6e;
+            font-weight: bold;
+        }
+
+        .title {
+            position: absolute;
+            bottom: -60px;
+            width: 100%;
+            text-align: center;
+            font-size: 20px;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .instructions {
+            position: absolute;
+            top: -50px;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Estilos para los corazones que siguen al mouse */
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            pointer-events: none; /* Para que no interfiera con los clics */
+            z-index: 1;
+            animation: floatUp 2s forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Estilos para los corazones estáticos de la carta */
+        .static-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .static-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 20px;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .card:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="instructions">Haz clic en la carta para abrirla</div>
+        <div class="card">
+            <div class="card-front">
+                <div class="static-hearts">
+                    <span class="static-heart" style="top: 10%; left: 15%;">❤</span>
+                    <span class="static-heart" style="top: 30%; left: 75%; animation-delay: 0.5s;">❤</span>
+                    <span class="static-heart" style="top: 70%; left: 25%; animation-delay: 1s;">❤</span>
+                    <span class="static-heart" style="top: 50%; left: 85%; animation-delay: 1.5s;">❤</span>
+                    <span class="static-heart" style="top: 85%; left: 50%; animation-delay: 2s;">❤</span>
+                </div>
+                <div class="front-text">
+                    <h2>Una carta especial para ti</h2>
+                    <p>Toca para leer</p>
+                </div>
+            </div>
+            <div class="card-back">
+                <div class="letter-content">
+                    <p>Querdo tatiana,</p>
+                    <p>Solo quería recordarte algo muy simple,<br>
+                    lo valioso en ti no está en tu corte de cabello ni como luces por fuera 
+                    <p>lo verdaderamente hermoso está en ti, en tu forma de ser, en tu sonrisa, en tu esencia..</p>
+                </div>
+                <div class="signature">Con amor ajisito ❤</div>
+            </div>
+        </div>
+        <div class="title">❤️ pochi pochi ❤️</div>
+    </div>
+
+    <script>
+        // Script para voltear la carta al hacer clic
+        document.querySelector('.card').addEventListener('click', function() {
+            this.classList.toggle('flipped');
+        });
+
+        // Script para crear corazones al mover el mouse
+        let lastHeartTime = 0;
+        
+        document.body.addEventListener('mousemove', (e) => {
+            const currentTime = Date.now();
+            if (currentTime - lastHeartTime > 200) { // Espera 200 ms entre cada corazón
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '⭐';
+                heart.style.left = `${e.pageX}px`;
+                heart.style.top = `${e.pageY}px`;
+                document.body.appendChild(heart);
+
+                // Eliminar el corazón después de 2 segundos
+                setTimeout(() => {
+                    heart.remove();
+                }, 2000);
+
+                lastHeartTime = currentTime; // Actualiza el tiempo del último corazón generado
+            }
+        });
+    </script>
+</body>
+</html>
